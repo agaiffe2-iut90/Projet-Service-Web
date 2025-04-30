@@ -56,12 +56,10 @@ export default {
       try {
         const response = await axios.post(`http://localhost:3000${endpoint}`, this.formData);
         if (response.status === 200) {
-          // L'authentification (connexion) a réussi
-          sessionStorage.removeItem('authToken'); // On ne stocke plus de token JWT
-          this.$router.push('/home'); // Redirige vers la page d'accueil
+          sessionStorage.removeItem('authToken');
+          this.$router.push('/home'); 
         } else if (response.status === 201) {
-          // L'enregistrement a réussi
-          this.isSignUp = false; // Bascule vers le formulaire de connexion
+          this.isSignUp = false;
           alert('Votre compte a été créé avec succès ! Veuillez vous connecter.');
         } else if (response.data && response.data.message) {
           alert(response.data.message);
@@ -88,7 +86,7 @@ export default {
     justify-content: center;
     min-height: 80vh;
     padding: 20px;
-    background-color: #f8f0e3; /* Couleur sable doux */
+    background-color: #f8f0e3; 
   }
   
   .ponnyhappy-header {
@@ -108,7 +106,7 @@ export default {
   
   h2 {
     margin-bottom: 20px;
-    color: #7b3f00; /* Brun terre */
+    color: #7b3f00; 
   }
   
   .auth-form {
@@ -136,7 +134,7 @@ export default {
   input[type="password"],
   input[type="text"] {
     padding: 12px;
-    border: 1px solid #c4a382; /* Brun clair */
+    border: 1px solid #c4a382; 
     border-radius: 6px;
     font-size: 16px;
     width: 100%;
@@ -172,7 +170,7 @@ export default {
   }
   
   .submit-button {
-    background-color: #7b3f00; /* Brun terre */
+    background-color: #7b3f00; 
     color: white;
     padding: 14px 22px;
     border: none;

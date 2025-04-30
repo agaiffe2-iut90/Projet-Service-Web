@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const pool = require('../database/db'); // Assurez-vous que le chemin est correct
+const pool = require('../database/db');
 
 const router = express.Router();
 

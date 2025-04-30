@@ -10,7 +10,7 @@ require('./passport/passport-config')(passport);
 
 const corsOptions = {
     origin: 'http://localhost:8080',
-    credentials: true, // Autorise l'envoi de cookies de session
+    credentials: true, 
 };
 
 app.use(cors(corsOptions)); 
