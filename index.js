@@ -32,7 +32,7 @@ mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: tru
     .catch(err => console.error('Erreur de connexion à MongoDB :', err));
 
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(app); // Créer le serveur HTTP
 const io = socketio(server, {
     cors: {
         origins: ['http://localhost:3000'],
@@ -40,6 +40,7 @@ const io = socketio(server, {
     }
 });
 
+// Configuration de cors
 const corsOptions = {
     origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -54,8 +55,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false, 
-        maxAge: 24 * 60 * 60 * 1000 
+        secure: false, // Set to true if using HTTPS
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
     }
 }));
 
@@ -69,12 +70,13 @@ app.get('/', (req, res) => {
 });
 
 
-const MAX_MESSAGES = 100; 
-const MESSAGE_KEY = 'chat_messages'; 
+const MAX_MESSAGES = 100; // Nombre maximum de messages à conserver dans Redis
+const MESSAGE_KEY = 'chat_messages'; // Clé Redis pour stocker les messages
 
 io.on('connection', async (socket) => {
     console.log("Nouvel utilisateur connecté:", socket.id);
 
+    // Envoyer les messages récents depuis Redis au nouvel utilisateur
     try {
         const recentMessages = await redisClient.lrange(MESSAGE_KEY, 0, -1);
         recentMessages.reverse().forEach(message => {
@@ -93,10 +95,11 @@ io.on('connection', async (socket) => {
         console.log("Message reçu:", messageData);
         io.emit('chat message', messageData.text, messageData.senderName);
 
+        // Ajouter le nouveau message à Redis
         const messageToStore = JSON.stringify(messageData);
         try {
             await redisClient.lpush(MESSAGE_KEY, messageToStore);
-            await redisClient.ltrim(MESSAGE_KEY, 0, MAX_MESSAGES - 1); 
+            await redisClient.ltrim(MESSAGE_KEY, 0, MAX_MESSAGES - 1); // Limiter la taille de la liste
         } catch (error) {
             console.error('Erreur lors de l\'ajout du message à Redis:', error);
         }
@@ -104,6 +107,6 @@ io.on('connection', async (socket) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => { 
+server.listen(PORT, () => { // Faire écouter le serveur HTTP
     console.log(`Server is running on port ${PORT}`);
 });
