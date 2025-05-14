@@ -1,5 +1,7 @@
 *Baptiste DULIEUX & Anna GAIFFE - S4B1*
 
+[Voir la démo](./video/mini_projet_2.mp4)
+
 ______________________________________________________
 # Projet 2
 
