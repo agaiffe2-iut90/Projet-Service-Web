@@ -5,11 +5,11 @@ ______________________________________________________
 
 ## Exécution projet 2:
 ```
-$ node index.js
+$ node server.js
 ```
 *(nouveau terminal)*
 ```
-$ cd client
+$ cd frontend
 ```
 ```
 $ npm run serve
