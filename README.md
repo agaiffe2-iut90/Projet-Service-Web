@@ -11,7 +11,7 @@ $ node server.js
 
 *(nouveau terminal)*
 ```
-$ cd frontend/front
+$ cd client
 ```
 ```
 $ npm run serve
